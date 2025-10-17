@@ -1,3 +1,5 @@
+﻿
+
 
 using System.Diagnostics;
 using System.Security.Authentication;
@@ -32,6 +34,41 @@ internal class Program
         Console.WriteLine("Enemy's energy " + enemyenergy + "/50");
     }
 
+    private static void PlayerAttack(ref Random roll, int minattackdamage, int maxattackdamage, ref int enemyhealth, ref int playerenergy, int turnrecharge, ref bool pturnsuccess)
+    {
+        int damage = roll.Next(minattackdamage, maxattackdamage);
+        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
+        enemyhealth -= damage;
+        playerenergy += turnrecharge;
+        pturnsuccess = true;
+    }
+
+    private static void PlayerSpecialAttack(ref Random roll, int MinSpecialAttackDamage, int MaxSpecialAttackDamage, ref int enemyhealth, ref int playerenergy, int turnrecharge, ref bool pturnsuccess)
+    {
+        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
+        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
+        enemyhealth -= damage;
+        playerenergy += turnrecharge;
+        pturnsuccess = true;
+    }
+
+    private static void EnemyAttack(ref Random roll, int  minattackdamage, int maxattackdamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
+    {
+        int damage = roll.Next(minattackdamage, maxattackdamage);
+        Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
+        playerhealth -= damage;
+        enemyenergy += turnrecharge;
+        eturnsuccess = true;
+    }
+
+    private static void EnemySpecialAttack(ref Random roll, int MinSpecialAttackDamage, int MaxSpecialAttackDamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
+    {
+        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
+        Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
+        playerhealth -= damage;
+        enemyenergy += turnrecharge;
+        eturnsuccess = true;
+    }
 
     private static void Main(string[] args)
     {
@@ -126,29 +163,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (enemychoice == dodge && chance <= DodgeAttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice == recharge && chance <= RechargeAttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice != dodge && enemychoice != recharge && chance <= AttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     else
@@ -178,29 +203,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (enemychoice == dodge && chance <= DodgeSpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerSpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice == recharge && chance <= RechargeSpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerSpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice != dodge && enemychoice != recharge && chance <= SpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
-                        enemyhealth -= damage;
-                        playerenergy += turnrecharge;
-                        pturnsuccess = true;
+                        PlayerSpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     else
@@ -342,29 +355,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (playerchoice == dodge && chance <= DodgeAttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice == recharge && chance <= RechargeAttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice != dodge && playerchoice != recharge && chance <= AttackSuccess)
                     {
-                        int damage = roll.Next(minattackdamage, maxattackdamage);
-                        Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     else
@@ -390,29 +391,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (playerchoice == dodge && chance <= DodgeSpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("The enemy's attack was successful. You dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemySpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice == recharge && chance <= RechargeSpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("The enemy's attack was successful. You dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemySpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice != dodge && playerchoice != recharge && chance <= SpecialAttackSuccess)
                     {
-                        int damage = roll.Next(MinSpecialAttackDamage, MaxSpecialAttackDamage);
-                        Console.WriteLine("The enemy's attack was successful. You dealt " + damage + " damage");
-                        playerhealth -= damage;
-                        enemyenergy += turnrecharge;
-                        eturnsuccess = true;
+                        EnemySpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     else
