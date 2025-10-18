@@ -34,9 +34,9 @@ internal class Program
         Console.WriteLine("Enemy's energy " + enemyenergy + "/50");
     }
 
-    private static void PlayerAttack(ref Random roll, int minattackdamage, int maxattackdamage, ref int enemyhealth, ref int playerenergy, int turnrecharge, ref bool pturnsuccess)
+    private static void PlayerAttack(ref Random roll, int MinAttackDamage, int MaxAttackDamage, ref int enemyhealth, ref int playerenergy, int turnrecharge, ref bool pturnsuccess)
     {
-        int damage = roll.Next(minattackdamage, maxattackdamage);
+        int damage = roll.Next(MinAttackDamage, MaxAttackDamage);
         Console.WriteLine("Your attack was successful. You dealt " + damage + " damage");
         enemyhealth -= damage;
         playerenergy += turnrecharge;
@@ -52,9 +52,9 @@ internal class Program
         pturnsuccess = true;
     }
 
-    private static void EnemyAttack(ref Random roll, int  minattackdamage, int maxattackdamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
+    private static void EnemyAttack(ref Random roll, int  MinAttackDamage, int MaxAttackDamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
     {
-        int damage = roll.Next(minattackdamage, maxattackdamage);
+        int damage = roll.Next(MinAttackDamage, MaxAttackDamage);
         Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
         playerhealth -= damage;
         enemyenergy += turnrecharge;
@@ -98,12 +98,12 @@ internal class Program
         const int maxenergy = 50;
         const int maxrecharge = 16;
         const int attackenergy = 5;
-        const int othermoveenergy = 10;
+        const int SpecialAttackAndHealEnergy = 10;
         const int minenergyneed = 4;
         const int maxenergyrecharge = 35;
         const int halfrecharge = 2;
-        const int minattackdamage = 1;
-        const int maxattackdamage = 10;
+        const int MinAttackDamage = 1;
+        const int MaxAttackDamage = 10;
         const int MinSpecialAttackDamage = 5;
         const int MaxSpecialAttackDamage = 20;
 
@@ -163,17 +163,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (enemychoice == dodge && chance <= DodgeAttackSuccess)
                     {
-                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
+                        PlayerAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice == recharge && chance <= RechargeAttackSuccess)
                     {
-                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
+                        PlayerAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     if (enemychoice != dodge && enemychoice != recharge && chance <= AttackSuccess)
                     {
-                        PlayerAttack(ref roll, minattackdamage, maxattackdamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
+                        PlayerAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref enemyhealth, ref playerenergy, turnrecharge, ref pturnsuccess);
                         break;
                     }
                     else
@@ -199,7 +199,7 @@ internal class Program
 
 
                     }
-                    playerenergy -= othermoveenergy;
+                    playerenergy -= SpecialAttackAndHealEnergy;
                     int chance = roll.Next(1, 10);
                     if (enemychoice == dodge && chance <= DodgeSpecialAttackSuccess)
                     {
@@ -281,13 +281,16 @@ internal class Program
                 {
                     if (playerhealth < healththresh && playerenergy > energycheck)
                     {
-                        playerenergy -= othermoveenergy;
-                        int halfstored = playerenergy / 2;
-                        int healamount = maxhealth - playerhealth;
-                        playerhealth += healamount;
-                        int addenergy = halfstored - healamount;
-                        playerenergy = (playerenergy - halfstored) + addenergy;
-                        Console.WriteLine("You have healed " + healamount + " health");
+                        enemyenergy -= SpecialAttackAndHealEnergy;
+                        int HalfEnergy = enemyenergy / 2;
+                        int MissingHealth = maxhealth - enemyhealth;
+                        int HealAmount = (HalfEnergy > MissingHealth) ? HalfEnergy : MissingHealth;
+                        if ((HealAmount + playerhealth) > maxhealth)
+                        {
+                            int HealDifference = (HealAmount + playerhealth) - maxhealth;
+                            HealAmount -= HealDifference;
+                        }
+                        Console.WriteLine("You have healed " + HealAmount + " health");
                         Console.WriteLine("You can now pick to do another move. It cannot be another heal");
                         ChoicesNoHeal();
                         playerchoice = Console.ReadLine();
@@ -355,17 +358,17 @@ internal class Program
                     int chance = roll.Next(1, 10);
                     if (playerchoice == dodge && chance <= DodgeAttackSuccess)
                     {
-                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
+                        EnemyAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice == recharge && chance <= RechargeAttackSuccess)
                     {
-                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
+                        EnemyAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     if (playerchoice != dodge && playerchoice != recharge && chance <= AttackSuccess)
                     {
-                        EnemyAttack(ref roll, minattackdamage, maxattackdamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
+                        EnemyAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref playerhealth, ref enemyenergy, turnrecharge, ref eturnsuccess);
                         break;
                     }
                     else
@@ -387,7 +390,7 @@ internal class Program
                         playerchoice = Console.ReadLine();
                         pturnsuccess = false;
                     }
-                    enemyenergy -= othermoveenergy;
+                    enemyenergy -= SpecialAttackAndHealEnergy;
                     int chance = roll.Next(1, 10);
                     if (playerchoice == dodge && chance <= DodgeSpecialAttackSuccess)
                     {
@@ -417,34 +420,28 @@ internal class Program
 
 
 
-
                 // choice 3 - enemy
                 if (enemychoice == recharge)
                 {
-                    if (enemyenergy < maxenergy)
+                    if (enemyenergy >= maxenergy)
                     {
-                        int newenergy = maxenergy - enemyenergy;
-                        if (enemyenergy < maxenergyrecharge)
-                        {
-                            enemyenergy += maxrecharge;
-                            bool hitincrease = true;
-                            Console.WriteLine("The enemy has recharged 16 energy, which is the max energy they can recharge.");
-                            eturnsuccess = true;
-                        }
-                        else
-                        {
-                            enemyenergy += newenergy;
-                            bool hitincrease = true;
-                            Console.WriteLine("The enemy has recharged " + newenergy + " energy");
-                            eturnsuccess = true;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("The enemy doesn't need to recharge.");
+                        Console.WriteLine("The enemy does not need to recharge. They are picking a new option.");
                         enemyroll = roll.Next(1, 5);
                         enemychoice = Convert.ToString(enemyroll);
                         eturnsuccess = false;
+                    }
+                    int newenergy = maxenergy - enemyenergy;
+                    if (enemyenergy < maxenergyrecharge)
+                    {
+                        enemyenergy += maxrecharge;
+                        Console.WriteLine("The enemy has recharged 16 energy, which is the max energy they can recharge.");
+                        eturnsuccess = true;
+                    }
+                    else
+                    {
+                        enemyenergy += newenergy;
+                        Console.WriteLine("The enemy has recharged " + newenergy + "energy");
+                        eturnsuccess = true;
                     }
                 }
 
@@ -474,13 +471,23 @@ internal class Program
                 {
                     if (enemyhealth < healththresh && enemyenergy > energycheck)
                     {
-                        enemyenergy -= othermoveenergy;
-                        int halfstored = enemyenergy / 2;
-                        int healamount = maxhealth - enemyhealth;
-                        enemyhealth += healamount;
-                        int addenergy = halfstored - healamount;
-                        enemyenergy = (enemyenergy - halfstored) + addenergy;
-                        Console.WriteLine("The enemy has healed " + healamount + " health");
+                        enemyenergy -= SpecialAttackAndHealEnergy;
+                        int HalfEnergy = enemyenergy / 2;
+                        int MissingHealth = maxhealth - enemyhealth;
+                        int HealAmount = (HalfEnergy > MissingHealth) ? HalfEnergy : MissingHealth;
+                        if ((HealAmount + playerhealth) > maxhealth)
+                        {
+                            int HealDifference = (HealAmount + playerhealth) - maxhealth;
+                            HealAmount -= HealDifference;
+                        }
+                        Console.WriteLine("The enemy has healed " + HealAmount + " health. They will now do a second move.");
+                        enemyroll = roll.Next(1, 5);
+                        enemychoice = Convert.ToString(enemyroll);
+                        while (enemychoice == heal)
+                        {
+                            enemyroll = roll.Next(1, 5);
+                            enemychoice = Convert.ToString(enemyroll);
+                        }
                         eturnsuccess = false;
 
                     }
