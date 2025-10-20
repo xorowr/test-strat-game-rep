@@ -1,6 +1,7 @@
 ﻿
 
 
+
 using System.Diagnostics;
 using System.Security.Authentication;
 using static System.Net.Mime.MediaTypeNames;
@@ -52,7 +53,7 @@ internal class Program
         pturnsuccess = true;
     }
 
-    private static void EnemyAttack(ref Random roll, int  MinAttackDamage, int MaxAttackDamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
+    private static void EnemyAttack(ref Random roll, int MinAttackDamage, int MaxAttackDamage, ref int playerhealth, ref int enemyenergy, int turnrecharge, ref bool eturnsuccess)
     {
         int damage = roll.Next(MinAttackDamage, MaxAttackDamage);
         Console.WriteLine("The enemy's attack was successful. They dealt " + damage + " damage");
@@ -148,7 +149,7 @@ internal class Program
             // continues choice selection until a turn has been successfully made
             while (pturnsuccess == false)
             {
-                // choice 1 (attack) - player
+                // choice 1 (attack) - player 
                 if (playerchoice == attack)
                 {
                     if (playerenergy < minenergyneed)

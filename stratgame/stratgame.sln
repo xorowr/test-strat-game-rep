@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.8.34316.72
+VisualStudioVersion = 17.14.36301.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stratgame", "stratgame\stratgame.csproj", "{B449C92A-6701-404F-A31A-A0C8131EBE7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stratgame", "stratgame\stratgame.csproj", "{4F91A9AF-A3AB-4D6F-81EA-AB1AA5A26AEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B449C92A-6701-404F-A31A-A0C8131EBE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B449C92A-6701-404F-A31A-A0C8131EBE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B449C92A-6701-404F-A31A-A0C8131EBE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B449C92A-6701-404F-A31A-A0C8131EBE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F91A9AF-A3AB-4D6F-81EA-AB1AA5A26AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F91A9AF-A3AB-4D6F-81EA-AB1AA5A26AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F91A9AF-A3AB-4D6F-81EA-AB1AA5A26AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F91A9AF-A3AB-4D6F-81EA-AB1AA5A26AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3AEA79CF-625E-4052-ADDF-D8D7B26FAF4C}
+		SolutionGuid = {B1082762-BF44-4B01-B4E8-552DE177360C}
 	EndGlobalSection
 EndGlobal
