@@ -31,7 +31,7 @@ internal class Program
     {
         Console.WriteLine("Your health: " + playerhealth + "/100");
         Console.WriteLine("Your energy: " + playerenergy + "/50");
-        Console.WriteLine("Enemey's health: " + enemyhealth + "/100");
+        Console.WriteLine("Enemy's health: " + enemyhealth + "/100");
         Console.WriteLine("Enemy's energy " + enemyenergy + "/50");
     }
 
@@ -551,3 +551,4 @@ internal class Program
         }
     }
 }
+
