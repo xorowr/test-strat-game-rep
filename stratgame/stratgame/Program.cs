@@ -94,13 +94,13 @@ internal class Program
 
 
         const int TurnRecharge = 4;
-        const int EnergyCheck = 9;
+        const int EnergyCheck = 10;
         const int MaxHealth = 100;
         const int MaxEnergy = 50;
         const int MaxRecharge = 16;
         const int AttackEnergy = 5;
         const int SpecialAttackAndHealEnergy = 10;
-        const int MinEnergyNeeded = 4;
+        const int MinEnergyNeeded = 5;
         const int MaxEnergyRecharge = 35;
         const int HalfRecharge = 2;
         const int MinAttackDamage = 1;
@@ -249,7 +249,7 @@ internal class Program
                     else
                     {
                         playerenergy += newenergy;
-                        Console.WriteLine("You have recharged " + newenergy + "energy");
+                        Console.WriteLine("You have recharged " + newenergy + " energy");
                         pturnsuccess = true;
                     }
                 }
@@ -282,10 +282,10 @@ internal class Program
                 {
                     if (playerhealth < HealthThreshold && playerenergy > EnergyCheck)
                     {
-                        enemyenergy -= SpecialAttackAndHealEnergy;
-                        int HalfEnergy = enemyenergy / 2;
-                        int MissingHealth = MaxHealth - enemyhealth;
-                        int HealAmount = (HalfEnergy > MissingHealth) ? HalfEnergy : MissingHealth;
+                        playerenergy -= SpecialAttackAndHealEnergy;
+                        int HalfEnergy = playerenergy / 2;
+                        int MissingHealth = MaxHealth - playerhealth;
+                        int HealAmount = (HalfEnergy < MissingHealth) ? HalfEnergy : MissingHealth;
                         if ((HealAmount + playerhealth) > MaxHealth)
                         {
                             int HealDifference = (HealAmount + playerhealth) - MaxHealth;
@@ -362,6 +362,10 @@ internal class Program
                         EnemyAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref playerhealth, ref enemyenergy, TurnRecharge, ref eturnsuccess);
                         break;
                     }
+                    else if (playerchoice == dodge && chance > DodgeAttackSuccess)
+                    {
+                        Console.WriteLine("Your dodge was successful!");
+                    }
                     if (playerchoice == recharge && chance <= RechargeAttackSuccess)
                     {
                         EnemyAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref playerhealth, ref enemyenergy, TurnRecharge, ref eturnsuccess);
@@ -397,6 +401,10 @@ internal class Program
                     {
                         EnemySpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref playerhealth, ref enemyenergy, TurnRecharge, ref eturnsuccess);
                         break;
+                    }
+                    else if (playerchoice == dodge && chance > DodgeAttackSuccess)
+                    {
+                        Console.WriteLine("Your dodge was successful!");
                     }
                     if (playerchoice == recharge && chance <= RechargeSpecialAttackSuccess)
                     {
@@ -470,7 +478,7 @@ internal class Program
                 // choice 5 - enemy
                 if (enemychoice == heal)
                 {
-                    if (enemyhealth < HealthThreshold && enemyenergy > EnergyCheck)
+                    if (enemyhealth < HealthThreshold && enemyenergy >= EnergyCheck)
                     {
                         enemyenergy -= SpecialAttackAndHealEnergy;
                         int HalfEnergy = enemyenergy / 2;
