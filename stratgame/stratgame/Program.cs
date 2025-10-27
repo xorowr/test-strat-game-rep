@@ -167,6 +167,10 @@ internal class Program
                         PlayerAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref enemyhealth, ref playerenergy, TurnRecharge, ref pturnsuccess);
                         break;
                     }
+                    else if (enemychoice == dodge && chance > DodgeAttackSuccess)
+                    {
+                        Console.WriteLine("The enemy's dodge was successful!");
+                    }
                     if (enemychoice == recharge && chance <= RechargeAttackSuccess)
                     {
                         PlayerAttack(ref roll, MinAttackDamage, MaxAttackDamage, ref enemyhealth, ref playerenergy, TurnRecharge, ref pturnsuccess);
@@ -206,6 +210,10 @@ internal class Program
                     {
                         PlayerSpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref enemyhealth, ref playerenergy, TurnRecharge, ref pturnsuccess);
                         break;
+                    }
+                    else if (enemychoice == dodge && chance > DodgeSpecialAttackSuccess)
+                    {
+                        Console.WriteLine("The enemy's dodge was successful!");
                     }
                     if (enemychoice == recharge && chance <= RechargeSpecialAttackSuccess)
                     {
@@ -345,7 +353,7 @@ internal class Program
             }
 
             // rerolls if it lands on a recharge when a recharge is not needed
-            while (enemychoice == recharge && enemyenergy >= MaxEnergyRecharge)
+            while (enemychoice == recharge && enemyenergy > EnergyThreshold)
             {
                 enemyroll = roll.Next(1, 5);
                 enemychoice = Convert.ToString(enemyroll);
@@ -413,7 +421,7 @@ internal class Program
                         EnemySpecialAttack(ref roll, MinSpecialAttackDamage, MaxSpecialAttackDamage, ref playerhealth, ref enemyenergy, TurnRecharge, ref eturnsuccess);
                         break;
                     }
-                    else if (playerchoice == dodge && chance > DodgeAttackSuccess)
+                    else if (playerchoice == dodge && chance > DodgeSpecialAttackSuccess)
                     {
                         Console.WriteLine("Your dodge was successful!");
                     }
@@ -460,7 +468,7 @@ internal class Program
                     else
                     {
                         enemyenergy += newenergy;
-                        Console.WriteLine("The enemy has recharged " + newenergy + "energy");
+                        Console.WriteLine("The enemy has recharged " + newenergy + " energy");
                         eturnsuccess = true;
                     }
                 }
@@ -495,9 +503,9 @@ internal class Program
                         int HalfEnergy = enemyenergy / 2;
                         int MissingHealth = MaxHealth - enemyhealth;
                         int HealAmount = (HalfEnergy > MissingHealth) ? HalfEnergy : MissingHealth;
-                        if ((HealAmount + playerhealth) > MaxHealth)
+                        if ((HealAmount + enemyhealth) > MaxHealth)
                         {
-                            int HealDifference = (HealAmount + playerhealth) - MaxHealth;
+                            int HealDifference = (HealAmount + enemyhealth) - MaxHealth;
                             HealAmount -= HealDifference;
                         }
                         Console.WriteLine("The enemy has healed " + HealAmount + " health. They will now do a second move.");
