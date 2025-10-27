@@ -333,6 +333,17 @@ internal class Program
             Console.WriteLine();
             eturnsuccess = false;
 
+            if (playerhealth <= 0)
+            {
+                Console.WriteLine("Game over!");
+                Console.WriteLine("The enemy has won. You lose.");
+            }
+            else if (enemyhealth <= 0)
+            {
+                Console.WriteLine("Game over!");
+                Console.WriteLine("You have won! Congrats");
+            }
+
             // rerolls if it lands on a recharge when a recharge is not needed
             while (enemychoice == recharge && enemyenergy >= MaxEnergyRecharge)
             {
